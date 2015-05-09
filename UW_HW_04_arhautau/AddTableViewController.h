@@ -10,4 +10,6 @@
 
 @interface AddTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+
 @end
