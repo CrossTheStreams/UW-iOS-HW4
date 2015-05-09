@@ -29,8 +29,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
+# pragma mark — IB Actions
+- (IBAction)tappedCancel:(id)sender {
+    [[[self navigationController] presentingViewController] dismissViewControllerAnimated:YES completion:^{
+        // reset date information here
+    }];
+}
+
+- (IBAction)tappedDone:(id)sender {
+    [[[self navigationController] presentingViewController] dismissViewControllerAnimated:YES completion:^{
+        // create new row with date info here
+    }];
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

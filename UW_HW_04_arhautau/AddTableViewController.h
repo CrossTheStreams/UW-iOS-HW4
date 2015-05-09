@@ -11,5 +11,6 @@
 @interface AddTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
 
 @end
