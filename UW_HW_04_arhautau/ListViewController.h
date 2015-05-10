@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddTableViewController.h"
 
-@interface ListViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ListViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, AddTableViewControllerDelegate>
 
+// NSArray of NSDictionaries with keys: @"days", @"name", @"date"
+@property (strong, nonatomic) NSArray *birthdays;
 
 @end
 

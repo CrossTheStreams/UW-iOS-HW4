@@ -7,16 +7,25 @@
 //
 
 #import "AddTableViewController.h"
+#import "ListViewController.h"
 
 @interface AddTableViewController ()
+
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UILabel *birthdayField;
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
 
 @end
 
 @implementation AddTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
+    [self setupDatePicker];
+    [self updateBirthdayField];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -29,19 +38,55 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) setupDatePicker {
+    [self.datePicker setDatePickerMode: UIDatePickerModeDate];
+    [self.datePicker setMaximumDate: [NSDate date]];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle: NSDateFormatterMediumStyle];
+    [formatter setDateFormat: @"yyyy"];
+    
+    NSUInteger previousYear = [[formatter stringFromDate: [NSDate date]] integerValue] - 1;
+    [formatter setDateFormat: @"dd-MM-yyyy"];
+    
+    NSDate *firstOfJanuaryOfPreviousYear = [formatter dateFromString: [NSString stringWithFormat: @"01-01-%lu", (unsigned long)previousYear]];
+    
+    [self.datePicker setDate: firstOfJanuaryOfPreviousYear];
+}
+
+- (IBAction)dateValueChanged:(id)sender {
+    [self updateBirthdayField];
+}
+
+-(void) updateBirthdayField {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle: NSDateFormatterLongStyle];
+    [self.birthdayField setText: [formatter stringFromDate: [self.datePicker date]]];
+}
+
+-(ListViewController*) listViewController {
+    return (ListViewController *) [[self navigationController] presentingViewController];
+}
 
 # pragma mark — IB Actions
 - (IBAction)tappedCancel:(id)sender {
-    [[[self navigationController] presentingViewController] dismissViewControllerAnimated:YES completion:^{
+    ListViewController *listVC = [self listViewController];
+    [listVC dismissViewControllerAnimated:YES completion:^{
         // reset date information here
     }];
 }
 
 - (IBAction)tappedDone:(id)sender {
-    [[[self navigationController] presentingViewController] dismissViewControllerAnimated:YES completion:^{
-        // create new row with date info here
+    ListViewController *listVC = [self listViewController];
+    [listVC dismissViewControllerAnimated:YES completion:^{
+        NSDate *date = [self.datePicker date];
+        NSString *name = [[self nameField] text];
+        [self.delegate addBirthdayWithDate: date AndWithName: name];
     }];
 }
+
+
+
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

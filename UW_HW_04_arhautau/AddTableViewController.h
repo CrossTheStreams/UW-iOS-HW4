@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol AddTableViewControllerDelegate <NSObject>
+
+-(void) addBirthdayWithDate: (NSDate *) date AndWithName: (NSString*) name;
+
+@end
+
 @interface AddTableViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (nonatomic, weak) id <AddTableViewControllerDelegate> delegate;
 
 @end
