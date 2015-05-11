@@ -88,7 +88,6 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSMutableArray *ascendingBirthdays = [NSMutableArray arrayWithArray: [self birthsdaysAscending]];
         NSUInteger row = [indexPath row];
-        NSLog(@"foo");
         [ascendingBirthdays removeObjectAtIndex: row];
         [self setBirthdays: ascendingBirthdays];
         [self.tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationFade];
